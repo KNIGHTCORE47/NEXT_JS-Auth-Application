@@ -1,12 +1,12 @@
 import { ConnectDB } from '@/dbConfig/dbConfig'
-import User from '@/models/user.models'
+import User from '@/models/user'
 import { NextRequest, NextResponse } from 'next/server'
 import bcryptjs from 'bcryptjs'
-import { sendEmail } from '@/helpers/mail.helpers'
+import { sendEmail } from '@/helpers/mailHelpers'
 
 ConnectDB()
 
-async function POST(request: NextRequest) {
+export async function POST(request: NextRequest) {
     try {
 
         const requestBody = await request.json()
@@ -22,7 +22,7 @@ async function POST(request: NextRequest) {
         //NOTE - Further Checking
         const signinedUser = await User.findOne({ email })
 
-        if (!signinedUser) return NextResponse.json({ error: `User already exists` }, { status: 400 })
+        if (signinedUser) return NextResponse.json({ error: `User already exists` }, { status: 400 })
 
         //NOTE - Password hashing
         const salt = await bcryptjs.genSalt(10);
@@ -41,20 +41,19 @@ async function POST(request: NextRequest) {
 
 
         //NOTE - Send verification email
-        await sendEmail({ email, emailType: "Verify", userId: savedUser._Id })
+        await sendEmail({ email, emailType: "VERIFY", userId: savedUser._id })
 
-        return NextResponse.json({ message: "User registered successfully", success: true, savedUser }, { status: 200 })
-
-
-
-
-
+        return NextResponse.json(
+            {
+                message: "User registered successfully", success: true,
+                savedUser
+            },
+            {
+                status: 200
+            }
+        )
 
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 500 })
     }
 }
-
-export {
-    POST
-} 
