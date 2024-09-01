@@ -10,6 +10,7 @@ export async function sendEmail({ email, emailType, userId }: any) {
 
     console.log('Email:', email);
     console.log('Email Type:', emailType);
+    console.log('Type of Email Type:', typeof emailType);
     console.log('User ID:', userId);
 
     try {
@@ -20,16 +21,20 @@ export async function sendEmail({ email, emailType, userId }: any) {
             await User.findByIdAndUpdate(
                 userId,
                 {
-                    verifyToken: hashedToken,
-                    verifyTokenExpiry: Date.now() + 3600000
+                    $set: {
+                        verifyToken: hashedToken,
+                        verifyTokenExpiry: Date.now() + 3600000
+                    }
                 }
             )
         } else if (emailType === "RESET") {
             await User.findByIdAndUpdate(
                 userId,
                 {
-                    forgotPasswordToken: hashedToken,
-                    forgotPasswordTokenExpiry: Date.now() + 3600000
+                    $set: {
+                        forgotPasswordToken: hashedToken,
+                        forgotPasswordTokenExpiry: Date.now() + 3600000
+                    }
                 }
             )
         }
