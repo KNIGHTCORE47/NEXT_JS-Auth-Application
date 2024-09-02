@@ -68,18 +68,17 @@ export default function VerifyEmailPage() {
             {verifyEmailStatus && (
                 <div className='space-y-3'>
                     <h2
-                        className='text-green-300'
+                        className='text-green-300 text-center'
                     >
                         Verified!! 🎉🎉
                     </h2>
 
-                    <hr />
+                    <div className='w-full text-center border border-y-[1px] border-x-0 py-1'>
+                        <Link href="/login">
+                            Visit Login page
+                        </Link>
+                    </div>
 
-                    <Link href="/login">
-                        Visit Login page
-                    </Link>
-
-                    <hr />
                 </div>
             )}
 
