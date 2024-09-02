@@ -66,17 +66,28 @@ export default function VerifyEmailPage() {
             </h2>
 
             {verifyEmailStatus && (
-                <div>
-                    <h2>Verified!!</h2>
+                <div className='space-y-3'>
+                    <h2
+                        className='text-green-300'
+                    >
+                        Verified!! 🎉🎉
+                    </h2>
+
+                    <hr />
+
                     <Link href="/login">
-                        Login
+                        Visit Login page
                     </Link>
                 </div>
             )}
 
             {error && (
                 <div>
-                    <h2>Error</h2>
+                    <h2
+                        className='text-red-500 text-2xl'
+                    >
+                        Error!!
+                    </h2>
                 </div>
             )}
         </div>
