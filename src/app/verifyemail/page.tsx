@@ -78,6 +78,8 @@ export default function VerifyEmailPage() {
                     <Link href="/login">
                         Visit Login page
                     </Link>
+
+                    <hr />
                 </div>
             )}
 
