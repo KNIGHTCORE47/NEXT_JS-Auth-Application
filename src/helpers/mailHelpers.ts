@@ -48,16 +48,27 @@ export async function sendEmail({ email, emailType, userId }: any) {
             },
         });
 
+        const htmlBodyForVerifyEmail = `
+    <p>
+            Click <a href="${process.env.DOMAIN}/verifyemail?token=${hashedToken}">here</a> to ${emailType === "VERIFY" ? "Verify your email" : "Reset your password"} 
+            or copy and paste the link below in your browser.
+            <br> ${process.env.DOMAIN}/verifyemail?token=${hashedToken}
+        </p>
+    `
+
+        const htmlBodyForForgotPassword = `
+    <p>
+            Click <a href="${process.env.DOMAIN}/forgotpassword?token=${hashedToken}">here</a> to ${emailType === "RESET" ? "Reset your password" : "Verify your email"} 
+            or copy and paste the link below in your browser.
+            <br> ${process.env.DOMAIN}/verifyemail?token=${hashedToken}
+        </p>
+    `
+
         const mailOptions = {
             from: 'abc@abc.com', // sender address
             to: email, // list of receivers
             subject: emailType === "VERIFY" ? "Verify your email" : "Reset your password", // Subject line
-            html: `
-    <p>
-            Click <a href="${process.env.DOMAIN}/${emailType === "VERIFY" ? "verifyemail" : "forgotpassword"}?token=${hashedToken}">${emailType === "VERIFY" ? "Verify your email" : "Reset your password"}</a> or copy and paste the link below in your browser.
-            <br> ${process.env.DOMAIN}/${emailType === "VERIFY" ? "verifyemail" : "forgotpassword"}?token=${hashedToken}
-        </p>
-    `, // html body
+            html: emailType === "VERIFY" ? htmlBodyForVerifyEmail : htmlBodyForForgotPassword, // html body
         }
 
         const mailResponse = await transport.sendMail(mailOptions)
