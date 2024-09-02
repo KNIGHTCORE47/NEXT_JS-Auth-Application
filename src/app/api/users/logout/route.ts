@@ -6,7 +6,7 @@ ConnectDB()
 export async function GET(request: NextRequest) {
     try {
         const response = NextResponse.json({
-            message: "Logout Success",
+            message: "Logout Successfully",
             success: true
         }, { status: 200 })
 

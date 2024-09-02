@@ -60,7 +60,7 @@ export default function VerifyEmailPage() {
         <div
             className='flex flex-col items-center justify-center min-h-screen py-2 bg-zinc-950 space-y-3'
         >
-            <h1 className='text-2xl'>Verify Email</h1>
+            <h1 className='text-xl'>Verify Email</h1>
             <h2 className='px-4 py-2 text-white font-medium bg-indigo-600'>
                 {token ? `${token}` : "Invalid Token"}
             </h2>
